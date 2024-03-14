@@ -19,6 +19,8 @@ const errorHandler = (err,req,res,next)=>{
         limitUnexpectedFile(res)
     }else if (err instanceof multer.MulterError || err.message === 'INVALID_FORMAT'){
         invalidFileType(res)
+    }else if(err.kind === 'ObjectId'){
+        return badRequest(res,`Invalid Object Id`)
     }else if (err.name === 'CastError'){
         return badRequest(res,err.message)
     }

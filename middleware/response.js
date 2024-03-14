@@ -44,6 +44,49 @@ const ok = (res,message,data)=>{
     return response(res,`OK`,data,200,message)
 }
 
+function parsePaginationParams(query){
+    const page = Number(query.page) || 1;
+    const limit = Number(query.limit) || 10;
+    const skip = (page - 1) * limit;
+    return {page,limit,skip}
+}
+
+// Helper function to build date range query
+function buildQuery(queryObject, start_date,end_date) {
+
+    // Build date range query
+    if (start_date) {
+        queryObject.createdAt = { $gte: new Date(start_date) };
+    }
+    if (end_date) {
+        queryObject.createdAt = {
+            ...queryObject.createdAt,
+            $lte: new Date(end_date)
+        };
+    }
+
+    return queryObject;
+}
+
+
+function selectFields(query,fields){
+    if(fields){
+        const fieldsList = fields.split(',').join(' ');
+        query = query.select(fieldsList)
+    }
+    return query
+}
+
+function applySort(query,sort){
+    if (sort) {
+        const sortList = sort.split(',').join(' ');
+        query = query.sort(sortList);
+    } else {
+        query = query.sort('createdAt');
+    }
+    return query;
+}
+
 
 
 module.exports = {
@@ -56,7 +99,11 @@ module.exports = {
     badRequest,
     notFound,
     badGateway,
-    ok
+    ok,
+    selectFields,
+    applySort,
+    parsePaginationParams,
+    buildQuery
 };
 
 

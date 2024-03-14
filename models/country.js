@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const countrySchema = new mongoose.Schema({
-    country_name : {
+    countryName : {
         type : String,
         required: [true, `Country name is required`]
     },
@@ -12,6 +12,8 @@ const countrySchema = new mongoose.Schema({
     picture :{
         type : String,
     }
+},{
+    timestamps:true
 })
 
 module.exports = mongoose.model("country", countrySchema)

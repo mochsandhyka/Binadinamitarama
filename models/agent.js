@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const {agentDetailSchema} = require('../models/agent-detail')
 
 const agentSchema = new mongoose.Schema({
-    agent_name : {
+    agentName : {
         type : String,
         required: [true, `Agent name is required`]
     },
@@ -11,11 +11,13 @@ const agentSchema = new mongoose.Schema({
         ref: 'country',
         required: [true, 'Country is required']
     },
-    agent_detail: {
+    agentDetail: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'agent_detail', 
+        ref: 'agentDetail', 
         required: true 
     }
+},{
+    timestamps:true
 })
 
 module.exports = mongoose.model("agent", agentSchema)

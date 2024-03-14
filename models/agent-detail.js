@@ -1,15 +1,17 @@
 const mongoose = require('mongoose')
 
 const agentDetailSchema = new mongoose.Schema({
-    agent_email : {
+    agentEmail : {
         type : String,
         required: [true, `Agent email is required`]
     },
-    agent_phone_number: {
+    agentPhoneNumber: {
         type : String,
         required: [true, `Agent phone number is required`]
     }
+},{
+    timestamps:true
 })
 
-module.exports = mongoose.model("agent_detail", agentDetailSchema)
+module.exports = mongoose.model("agentDetail", agentDetailSchema)
 
